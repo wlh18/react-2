@@ -1,68 +1,145 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Two
 
-## Available Scripts
+In this lecture we will go more in depth about data and how it flows in the React ecosystem.
 
-In the project directory, you can run:
+## Data Flow
 
-### `npm start`
+React will handle it's data using a `unidirectional data flow`. This means that data is passed down from the top of the application to the bottom. We can determine what top and bottom are using our `component architecture` design.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+We can use events to send data back up the `component tree`.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+![DataFlow](images/dataflow.png)
 
-### `npm test`
+Values from a components state or methods can be passed to a child component through `props`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Props
 
-### `npm run build`
+Using props allow us to pass data from a parent component to a child component. We do this rendering a child component inside of our JSX then setting an attribute on the rendered component with the data that we want to pass as a value for the attribute.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Passing Props From Parent Component
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+```javascript
+import React from 'react';
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+// Import the child component
+import ChildComponent from './ChildComponent';
 
-### `npm run eject`
+class ParentComponent extends React.Component {
+    constructor(){
+        super();
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+        this.state = {
+            name: 'Tayte'
+        }
+    }
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    render(){
+        return (
+            <div>
+                // Render the child component inside of the parents JSX
+                // Apply props to it to pass the data
+                <ChildComponent myName={this.state.name}/>
+            </div>
+        )
+    }
+}
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+export default ParentComponent
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Receiving Props Functional Component
 
-## Learn More
+Receiving props as a `functional component` is different then how we receive them as a `class component`. In the functional component, we will need to set a parameter to allow us to receieve the `props` object as an argument. We can then access the data from that object.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Let's create the child component from the above example as a functional component:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```javascript
+import React from 'react';
 
-### Code Splitting
+const ChildComponent = (props) => {
+    // notice how we have a param set to recieve the props object
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+    return (
+        // We can then use this object to grab the prop from it
+        <h1>My name is: {props.myName}</h1>
+    )
+};
 
-### Analyzing the Bundle Size
+export default ChildComponent;
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### Receiving Props Class Component
 
-### Making a Progressive Web App
+Receiving props as a `class component` is not the same as a functional component. We no longer need to set a parameter in anyway to recive the `props` object. This object is actually built into the class component so we will access it through the class itself using the `this` keyword.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+Let's create that same child componet but in class form:
 
-### Advanced Configuration
+```javascript
+import React from 'react';
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+class ChildComponent extends React.Component {
+    render(){
+        return (
+            // notice how we use the `this` keyword
+            <h1>My name is: {this.props.myName}
+        )
+    }
+}
 
-### Deployment
+export default ChildComponent;
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+### Passing Methods
 
-### `npm run build` fails to minify
+We can also pass methods from a component to another component so that the functionality inside of the nested component can update the state of where that method was created.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+When we pass methods we need to make sure that we `bind` them to the component they were created in.
+
+In the constructor is where you want to bind your methods.
+
+```javascript
+import React from 'react';
+
+class ParentComponent extends React.Component {
+    constructor(){
+        super();
+
+        this.state = {
+            name: 'Tayte'
+        }
+
+        // bind methods here
+        this.changeName = this.changeName.bind(this);
+    }
+
+    changeName(){
+        // use setState to update state values
+        this.setState({
+            name: 'Tayte V2'
+        })
+    }
+
+    render(){
+        return (
+            <div>
+                // we are now passing multiple props one from state and the other the method to update the state
+                <ChildComponent myName={this.state.name} changeName={this.changeName}/>
+            </div>
+        )
+    }
+}
+
+class ChildComponent extends React.Component {
+    render(){
+        return (
+            <div>
+                <h1>My name is: {this.props.myName}</h1>
+                // use the method on the event of the button
+                <button >Update Name</button>
+            </div>
+        )
+    }
+}
+
+export default ChildComponent;
+```
