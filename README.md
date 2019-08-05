@@ -135,7 +135,7 @@ class ChildComponent extends React.Component {
             <div>
                 <h1>My name is: {this.props.myName}</h1>
                 // use the method on the event of the button
-                <button >Update Name</button>
+                <button onClick={this.props.changeName}>Update Name</button>
             </div>
         )
     }
