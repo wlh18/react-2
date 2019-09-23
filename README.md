@@ -4,7 +4,7 @@ In this lecture we will go more in depth about data and how it flows in the Reac
 
 ## Data Flow
 
-React will handle it's data using a `unidirectional data flow`. This means that data is passed down from the top of the application to the bottom. We can determine what top and bottom are using our `component architecture` design.
+React will handle its data using `unidirectional data flow`. This means that data is passed down from the top of the application to the bottom. We can determine what top and bottom are using our `component architecture` design.
 
 We can use events to send data back up the `component tree`.
 
@@ -57,7 +57,7 @@ Let's create the child component from the above example as a functional componen
 import React from 'react';
 
 const ChildComponent = (props) => {
-    // notice how we have a param set to recieve the props object
+    // notice how we have a param set to receive the props object
 
     return (
         // We can then use this object to grab the prop from it
@@ -70,7 +70,7 @@ export default ChildComponent;
 
 ### Receiving Props Class Component
 
-Receiving props as a `class component` is not the same as a functional component. We no longer need to set a parameter in anyway to recive the `props` object. This object is actually built into the class component so we will access it through the class itself using the `this` keyword.
+Receiving props as a `class component` is not the same as a functional component. We no longer need to set a parameter in any way to receive the `props` object. This object is actually built into the class component so we will access it through the class itself using the `this` keyword.
 
 Let's create that same child componet but in class form:
 
@@ -91,7 +91,7 @@ export default ChildComponent;
 
 ### Passing Methods
 
-We can also pass methods from a component to another component so that the functionality inside of the nested component can update the state of where that method was created.
+We can also pass methods from one component to another component so that the functionality inside of the nested component can update the state of where that method was created.
 
 When we pass methods we need to make sure that we `bind` them to the component they were created in.
 
