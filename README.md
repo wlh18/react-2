@@ -2,6 +2,10 @@
 
 In this lecture we will go more in depth about data and how it flows in the React ecosystem.
 
+## Lecture Slides
+
+https://slides.com/mattbodily/deck-90cb52
+
 ## Data Flow
 
 React will handle its data using `unidirectional data flow`. This means that data is passed down from the top of the application to the bottom. We can determine what top and bottom are using our `component architecture` design.
