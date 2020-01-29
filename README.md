@@ -4,7 +4,7 @@ In this lecture we will go more in depth about data and how it flows in the Reac
 
 ## Lecture Slides
 
-https://slides.com/mattbodily/deck-90cb52
+https://slides.com/matias_perez/react-two#/
 
 ## Data Flow
 
