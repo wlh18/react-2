@@ -6,6 +6,18 @@ In this lecture we will go more in depth about data and how it flows in the Reac
 
 https://slides.com/matias_perez/react-two#/
 
+# Student Learning Objectives
+
+* Student can pass hard coded data via props
+* Student can pass data from state via props
+* Student can pass functions via props
+* Student can bind function
+* Student understands they need to bind any function passed as a prop
+* Student can access this.props in a child to get data from the parent
+* Student can invoke a function from a parent that was passed via props
+* Student can pass data back to a parent via a props function
+
+
 ## Data Flow
 
 React will handle its data using `unidirectional data flow`. This means that data is passed down from the top of the application to the bottom. We can determine what top and bottom are using our `component architecture` design.
